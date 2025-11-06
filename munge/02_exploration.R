@@ -133,5 +133,71 @@ head(BMI_change, 10)
 
 #---------------------------------------------------------------------
 
+# Grace code
+# ---------------------------------------------------------------
+# RELATIONSHIP BETWEEN RISK FACTORS
+# ---------------------------------------------------------------
+
+# Merge datasets by location, sex, and year
+health_data <- BMI_AGE %>%
+  inner_join(DIABETES, by = c("location", "sex", "year", "ISO")) %>%
+  inner_join(CHOLESTEROL, by = c("location", "sex", "year", "ISO")) %>%
+  inner_join(BLOOD_PRESSURE, by = c("location", "sex", "year", "ISO"))
+
+# View structure
+glimpse(health_data)
+
+# ---------------------------------------------------------------
+# CORRELATION ANALYSIS
+# ---------------------------------------------------------------
+
+# Select relevant numeric columns
+cor_data <- health_data %>%
+  select(BMI_mean_obesity, DIABETES_mean, CHOLESTEROL_mean, BP_mean)
+
+# Compute correlation matrix
+cor_matrix <- cor(cor_data, use = "complete.obs")
+
+# Print correlation matrix
+print(round(cor_matrix, 3))
+
+# Visualize correlation matrix
+library(reshape2)
+library(ggplot2)
+
+cor_melt <- melt(cor_matrix)
+ggplot(cor_melt, aes(x = Var1, y = Var2, fill = value)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = round(value, 2)), color = "black") +
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0) +
+  labs(title = "Correlation Matrix of NCD Risk Factors",
+       x = "", y = "", fill = "Correlation") +
+  theme_minimal()
+
+# ---------------------------------------------------------------
+# OBESITY VS OTHER RISK FACTORS
+# ---------------------------------------------------------------
+
+# Obesity vs Diabetes
+ggplot(health_data, aes(x = BMI_mean_obesity, y = DIABETES_mean, color = sex)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = FALSE, color = "black") +
+  labs(title = "Relationship Between Obesity and Diabetes Prevalence",
+       x = "Obesity Prevalence (%)", y = "Diabetes Prevalence (%)")
+
+# Obesity vs Cholesterol
+ggplot(health_data, aes(x = BMI_mean_obesity, y = CHOLESTEROL_mean, color = sex)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = FALSE, color = "black") +
+  labs(title = "Relationship Between Obesity and Cholesterol Levels",
+       x = "Obesity Prevalence (%)", y = "Mean Total Cholesterol (mmol/L)")
+
+# Obesity vs Blood Pressure
+ggplot(health_data, aes(x = BMI_mean_obesity, y = BP_mean, color = sex)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = FALSE, color = "black") +
+  labs(title = "Relationship Between Obesity and Blood Pressure",
+       x = "Obesity Prevalence (%)", y = "Mean Systolic BP (mmHg)")
+
 
   
