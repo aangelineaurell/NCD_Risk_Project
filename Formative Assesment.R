@@ -1,6 +1,6 @@
 install.packages(c("ProjectTemplate", "readxl", "dplyr"))
 library(ProjectTemplate)
-library(readxl)
+library(readr)
 library(dplyr)
 
 create.project("NCD_Risk_Project")
@@ -10,29 +10,18 @@ BLOOD_PRESSURE_ <- read_csv("data/NCD_RisC_Lancet_2017_BP_age_standardised_count
 View(BLOOD_PRESSURE_)
 
 library(readr)
-BMI_AGE <- read_csv("data/NCD_RisC_Lancet_2024_BMI_age_standardised_country.csv")
-View(BMI_AGE)
+BMI_AGE_ <- read_csv("data/NCD_RisC_Lancet_2024_BMI_age_standardised_country.csv")
+View(BMI_AGE_)
 
 library(readr)
-BMI_CHILD_AGE <- read_csv("data/NCD_RisC_Lancet_2024_BMI_child_adolescent_country_ageStd.csv")
-View(BMI_CHILD_AGE)
+BMI_CHILD_AGE_<- read_csv("data/NCD_RisC_Lancet_2024_BMI_child_adolescent_country_ageStd.csv")
+View(BMI_CHILD_AGE_)
 
 library(readr)
-CHOLESTEROL <- read_csv("data/NCD_RisC_Nature_2020_Cholesterol_age_standardised_countries.csv")
-View(CHOLESTEROL)
+CHOLESTEROL_<- read_csv("data/NCD_RisC_Nature_2020_Cholesterol_age_standardised_countries.csv")
+View(CHOLESTEROL_)
 
 library(readr)
-DIABETES <- read_csv("data/NCD_RisC_Lancet_2024_Diabetes_age_standardised_countries.csv")
-View(DIABETES)
+DIABETES_ <- read_csv("data/NCD_RisC_Lancet_2024_Diabetes_age_standardised_countries.csv")
+View(DIABETES_)
 
-
-
-
-
-
-
-
-library(dplyr)
-BLOOD_PRESSURE_ <- read_csv("data/BLOOD PRESSURE .csv") #cleaning data
-uk_data <- BLOOD_PRESSURE_ %>%
-  filter(C`Country/Region/World` == "United Kingdom") #filter data for UK country
